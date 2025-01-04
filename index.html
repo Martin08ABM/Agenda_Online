@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="Hecho por" content="Martin Adolfo Bravo Montaño">
+    <meta name="Descripción" content="Agenda Online">
+    <meta name="Palabras clave" content="Agenda, Online, Tareas, Fecha, Inicio, Finalización, Descripción, Prioridad">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Online</title> 
+    <style>
+        body {
+            margin: 0 auto;
+            background: #dfdfdd;
+        }
+        h1 {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            text-align: center;
+        }
+        h3 {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-left: 3%;
+        }
+        h4 {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-left: 3%;
+        }
+        h5 {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-left: 4%;
+        }
+        a {
+            text-decoration: none;
+        }
+        button[type="button"] {
+            margin-left: 1.5%;
+            display: inline-flex;
+            padding: 10px 20px;
+            background: black;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        button[type="button"]:hover {
+            background: #333;
+            transition: 0.5s;
+        }
+        input[type="text"] {
+            display: inline-flex;
+            margin-left: 4%;
+            padding: 5px;
+            width: 40%;
+            border: 2px solid black;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            text-align: start;
+        }
+        button[type="submit"] {
+            margin-left: 0.8%;
+            padding: 4px 8px;
+            background: rgb(48, 48, 48);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        button[type="submit"]:hover {
+            background: rgb(122, 122, 122);
+            transition: 0.5s;
+        }
+        input[type="date"] {
+            margin-left: 5%;
+            margin-top: 0px;
+            display: block;
+            padding: 5px;
+            width: 130px;
+            border: 2px solid black;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            text-align: center;
+            flex-direction: row;
+        }
+        .form {
+            display: inline-flex;
+            margin-left: 3%;
+        }
+        .tasks_to_start {
+            margin-left: 3%;
+            margin-top: 2%;
+            min-width: 40%;
+            max-width: 80%;
+            width: 45%;
+            border: 2px solid black;
+            border-radius: 10px;
+            background: #f0f0f0;
+        }
+        .tasks_to_finish {
+            margin-left: 3%;
+            margin-top: 2%;
+            min-width: 40%;
+            max-width: 80%;
+            width: 45%;
+            border: 2px solid black;
+            border-radius: 10px;
+            background: #f0f0f0;
+        }
+        .tasks {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+<!--
+    Licencia de Software Propietario
+
+    Este software es propiedad de Martin Adolfo Bravo Montaño. Está licenciado, no vendido, bajo los siguientes términos:
+    1. Uso: Solo puede ser utilizado por el usuario registrado para fines personales/comerciales.
+    2. Prohibición: No se permite la redistribución, modificación, o copia sin el permiso expreso de Martin Adolfo Bravo Montaño.
+    3. Limitación de responsabilidad: Martin Adolfo Bravo Montaño no será responsable por daños directos, indirectos, incidentales, o consecuenciales.
+    4. Soporte: [Define si proporcionas soporte o no].
+    5. Si se quiere verificar esta información, puede buscar https://github.com/Martin08ABM?tab=repositories en Google, y entrará en mi perfil, en el que encontrará un repositorio llamado "Agenda Online", con un documento README en el que se explica más esta licencia.
+
+    Al utilizar este software, el usuario acepta los términos de esta licencia.
+    -->
+    <h1>AGENDA ONLINE</h1> <!--Título de la página-->
+    <h3 style="font-weight: 800; margin-left: 2%;">Añade una tarea a tu agenda:</h3> <!--Instrucciones para añadir una tarea a la agenda-->
+    <input type="text" placeholder="Escribe aquí tu tarea" id="tasks">
+        <br>
+    <h4>Añade la fecha de inicio y fin:</h4> <!--Instrucciones para añadir la fecha de inicio y finalización de la tarea-->
+<div class="form"> <!--Formulario para añadir la fecha de inicio y finalización de la tarea-->
+    <input type="date" id="date_start" placeholder="Coloca la fecha de inicio" style="height: 20px;">
+    <input type="date" id="date_finish" placeholder="Coloca la fecha de finalización" style="height: 20px;">
+</div>
+<div class="form"> <!--Formulario para añadir la descripción y prioridad de la tarea-->
+    <input type="text" placeholder="Descripción de la tarea" id="description" style="width: 200px;">
+    <input type="text" placeholder="Prioridad de la tarea" id="priority" class="priority" style="width: 200px;">
+</div>
+<br><br><br> <!--Botón para añadir la tarea a la agenda-->
+    <button type="submit" id="task">Añadir a la agenda</button>
+<br><br>
+<div class="tasks"> <!--Divs para mostrar las tareas que están a punto de empezar y acabar-->
+    <div class="tasks_to_start">
+        <h3>Tareas próximas de EMPEZAR:</h3> <!--Título de las tareas que están a punto de empezar-->
+        <h5>Las tareas que estén a punto de llegar a la fecha de inicio se mostrarán aquí</h5>
+        <div id="tasks_to_start"></div><br>
+    </div>
+    <div class="tasks_to_finish"> <!--Título de las tareas que están a punto de acabar-->
+        <h3>Tareas próximas de ACABAR:</h3> <!--Título de las tareas que están a punto de acabar-->
+        <h5>Las tareas que estén a punto de llegar a la fecha de finalización se mostrarán aquí</h5>
+        <div id="tasks_to_finish"></div><br>
+    </div>
+</div>
+<br><br><h5>© 2025 Martin Adolfo Bravo Montaño. Todos los derechos reservados.</h5>
+<script>
+    const tasks = document.getElementById('tasks');
+    const task = document.getElementById('task');
+    const tasks_to_start = document.getElementById('tasks_to_start');
+    const tasks_to_finish = document.getElementById('tasks_to_finish');
+    const date_start = document.getElementById('date_start');
+    const date_finish = document.getElementById('date_finish');
+    const description = document.getElementById('description');
+    const priority = document.getElementById('priority');
+    const delete_button = document.getElementById('delete');
+
+    task.addEventListener('click', () => {
+        if (tasks && date_start && date_finish && description.value && priority.value) {
+            const task = document.createElement('div');
+            const priority = document.getElementById('priority');
+            task.style.border = '2px solid black';
+            task.style.borderRadius = '10px';
+            task.style.margin = '10px';
+            task.style.padding = '10px';
+            task.style.width = '40%';
+            task.innerHTML = `
+                <h4>${tasks.value}</h4>
+                <h5>${description.value}</h5>
+                <h5>${date_start.value}</h5>
+                <h5>${date_finish.value}</h5>
+                <h5>${priority.value}</h5>
+                <br>
+                <button type="button" onclick="this.parentElement.remove()" id="delete">Eliminar</button>
+            `;
+            tasks_to_start.appendChild(task);
+            tasks_to_finish.appendChild(task);
+            localStorage.setItem('tasks', task.innerHTML);
+            localStorage.setItem('tasks_to_start', tasks_to_start.innerHTML);
+            localStorage.setItem('tasks_to_finish', tasks_to_finish.innerHTML);
+            localStorage.setItem('date_start', date_start.value);
+            localStorage.setItem('date_finish', date_finish.value);
+            localStorage.setItem('description', description.value);
+            localStorage.setItem('priority', priority.value);
+            tasks.value = '';
+            date_start.value = '';
+            date_finish.value = '';
+            description.value = '';
+            priority.value = '';
+
+        }
+    });
+
+    delete_button.addEventListener('click', () => {
+            tasks_to_start.innerHTML = '';
+            tasks_to_finish.innerHTML = '';
+            localStorage.removeItem('tasks');
+            localStorage.removeItem('tasks_to_start');
+            localStorage.removeItem('tasks_to_finish');
+            localStorage.removeItem('date_start');
+            localStorage.removeItem('date_finish');
+            localStorage.removeItem('description');
+            localStorage.removeItem('priority');
+            tasks.value = '';
+            date_start.value = '';
+            date_finish.value = '';
+            description.value = '';
+            priority.value = '';
+    });
+</script>
+</body>
+</html>
