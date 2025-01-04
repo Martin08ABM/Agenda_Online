@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta name="Hecho por" content="Martin Adolfo Bravo Montaño">
     <meta name="Descripción" content="Agenda Online">
     <meta name="Palabras clave" content="Agenda, Online, Tareas, Fecha, Inicio, Finalización, Descripción, Prioridad">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda Online</title> 
+    <title>Agenda Online</title>
     <style>
-        body {
+       body {
             margin: 0 auto;
             background: #dfdfdd;
         }
@@ -123,7 +122,8 @@
     </style>
 </head>
 <body>
-<!--
+
+    <!--
     Licencia de Software Propietario
 
     Este software es propiedad de Martin Adolfo Bravo Montaño. Está licenciado, no vendido, bajo los siguientes términos:
@@ -135,98 +135,104 @@
 
     Al utilizar este software, el usuario acepta los términos de esta licencia.
     -->
-    <h1>AGENDA ONLINE</h1> <!--Título de la página-->
-    <h3 style="font-weight: 800; margin-left: 2%;">Añade una tarea a tu agenda:</h3> <!--Instrucciones para añadir una tarea a la agenda-->
-    <input type="text" placeholder="Escribe aquí tu tarea" id="tasks">
-        <br>
-    <h4>Añade la fecha de inicio y fin:</h4> <!--Instrucciones para añadir la fecha de inicio y finalización de la tarea-->
-<div class="form"> <!--Formulario para añadir la fecha de inicio y finalización de la tarea-->
-    <input type="date" id="date_start" placeholder="Coloca la fecha de inicio" style="height: 20px;">
-    <input type="date" id="date_finish" placeholder="Coloca la fecha de finalización" style="height: 20px;">
+
+<h1>AGENDA ONLINE</h1>
+
+<h3 style="font-weight: 800; margin-left: 2%;">Añade una tarea a tu agenda:</h3>
+
+<input type="text" placeholder="Escribe aquí tu tarea" id="tasks">
+<br>
+
+<h4>Añade la fecha de inicio y fin:</h4>
+<div class="form">
+    <input type="date" id="date_start" placeholder="Coloca la fecha de inicio">
+    <input type="date" id="date_finish" placeholder="Coloca la fecha de finalización">
 </div>
-<div class="form"> <!--Formulario para añadir la descripción y prioridad de la tarea-->
-    <input type="text" placeholder="Descripción de la tarea" id="description" style="width: 200px;">
-    <input type="text" placeholder="Prioridad de la tarea" id="priority" class="priority" style="width: 200px;">
+
+<div class="form">
+    <input type="text" placeholder="Descripción de la tarea" id="description">
+    <input type="text" placeholder="Prioridad de la tarea" id="priority" class="priority">
 </div>
-<br><br><br> <!--Botón para añadir la tarea a la agenda-->
-    <button type="submit" id="task">Añadir a la agenda</button>
 <br><br>
-<div class="tasks"> <!--Divs para mostrar las tareas que están a punto de empezar y acabar-->
+<button type="submit" id="task">Añadir a la agenda</button>
+
+<div class="tasks">
     <div class="tasks_to_start">
-        <h3>Tareas próximas de EMPEZAR:</h3> <!--Título de las tareas que están a punto de empezar-->
-        <h5>Las tareas que estén a punto de llegar a la fecha de inicio se mostrarán aquí</h5>
+        <h3>Tareas próximas de EMPEZAR:</h3>
         <div id="tasks_to_start"></div><br>
     </div>
-    <div class="tasks_to_finish"> <!--Título de las tareas que están a punto de acabar-->
-        <h3>Tareas próximas de ACABAR:</h3> <!--Título de las tareas que están a punto de acabar-->
-        <h5>Las tareas que estén a punto de llegar a la fecha de finalización se mostrarán aquí</h5>
+    <div class="tasks_to_finish">
+        <h3>Tareas próximas de ACABAR:</h3>
         <div id="tasks_to_finish"></div><br>
     </div>
 </div>
-<br><br><h5>© 2025 Martin Adolfo Bravo Montaño. Todos los derechos reservados.</h5>
+
+<h5>© 2025 Martin Adolfo Bravo Montaño. Todos los derechos reservados.</h5>
+
 <script>
-    const tasks = document.getElementById('tasks');
-    const task = document.getElementById('task');
-    const tasks_to_start = document.getElementById('tasks_to_start');
-    const tasks_to_finish = document.getElementById('tasks_to_finish');
-    const date_start = document.getElementById('date_start');
-    const date_finish = document.getElementById('date_finish');
+    const tasksInput = document.getElementById('tasks');
+    const taskButton = document.getElementById('task');
+    const tasksToStart = document.getElementById('tasks_to_start');
+    const tasksToFinish = document.getElementById('tasks_to_finish');
+    const dateStart = document.getElementById('date_start');
+    const dateFinish = document.getElementById('date_finish');
     const description = document.getElementById('description');
     const priority = document.getElementById('priority');
-    const delete_button = document.getElementById('delete');
 
-    task.addEventListener('click', () => {
-        if (tasks && date_start && date_finish && description.value && priority.value) {
-            const task = document.createElement('div');
-            const priority = document.getElementById('priority');
-            task.style.border = '2px solid black';
-            task.style.borderRadius = '10px';
-            task.style.margin = '10px';
-            task.style.padding = '10px';
-            task.style.width = '40%';
-            task.innerHTML = `
-                <h4>${tasks.value}</h4>
+    // Función para guardar tareas en localStorage
+    function saveTasks() {
+        const taskElements = document.querySelectorAll('.task-item');
+        const tasksData = [];
+        taskElements.forEach(task => {
+            tasksData.push(task.innerHTML);
+        });
+        localStorage.setItem('tasks', JSON.stringify(tasksData));
+    }
+
+    // Función para cargar tareas desde localStorage
+    function loadTasks() {
+        const tasksData = JSON.parse(localStorage.getItem('tasks')) || [];
+        tasksData.forEach(taskHTML => {
+            const taskDiv = document.createElement('div');
+            taskDiv.classList.add('task-item');
+            taskDiv.innerHTML = taskHTML;
+            tasksToStart.appendChild(taskDiv);
+            tasksToFinish.appendChild(taskDiv);
+        });
+    }
+
+    taskButton.addEventListener('click', () => {
+        if (tasksInput.value && dateStart.value && dateFinish.value && description.value && priority.value) {
+            const taskDiv = document.createElement('div');
+            taskDiv.classList.add('task-item');
+            taskDiv.style.border = '2px solid black';
+            taskDiv.style.borderRadius = '10px';
+            taskDiv.style.margin = '10px';
+            taskDiv.style.padding = '10px';
+            taskDiv.style.width = '40%';
+            taskDiv.innerHTML = `
+                <h4>${tasksInput.value}</h4>
                 <h5>${description.value}</h5>
-                <h5>${date_start.value}</h5>
-                <h5>${date_finish.value}</h5>
+                <h5>${dateStart.value}</h5>
+                <h5>${dateFinish.value}</h5>
                 <h5>${priority.value}</h5>
-                <br>
-                <button type="button" onclick="this.parentElement.remove()" id="delete">Eliminar</button>
+                <button type="button" onclick="this.parentElement.remove(); saveTasks();">Eliminar</button>
             `;
-            tasks_to_start.appendChild(task);
-            tasks_to_finish.appendChild(task);
-            localStorage.setItem('tasks', task.innerHTML);
-            localStorage.setItem('tasks_to_start', tasks_to_start.innerHTML);
-            localStorage.setItem('tasks_to_finish', tasks_to_finish.innerHTML);
-            localStorage.setItem('date_start', date_start.value);
-            localStorage.setItem('date_finish', date_finish.value);
-            localStorage.setItem('description', description.value);
-            localStorage.setItem('priority', priority.value);
-            tasks.value = '';
-            date_start.value = '';
-            date_finish.value = '';
+            tasksToStart.appendChild(taskDiv);
+            tasksToFinish.appendChild(taskDiv);
+            saveTasks(); // Guardar después de agregar la tarea
+
+            tasksInput.value = '';
+            dateStart.value = '';
+            dateFinish.value = '';
             description.value = '';
             priority.value = '';
-
         }
     });
 
-    delete_button.addEventListener('click', () => {
-            tasks_to_start.innerHTML = '';
-            tasks_to_finish.innerHTML = '';
-            localStorage.removeItem('tasks');
-            localStorage.removeItem('tasks_to_start');
-            localStorage.removeItem('tasks_to_finish');
-            localStorage.removeItem('date_start');
-            localStorage.removeItem('date_finish');
-            localStorage.removeItem('description');
-            localStorage.removeItem('priority');
-            tasks.value = '';
-            date_start.value = '';
-            date_finish.value = '';
-            description.value = '';
-            priority.value = '';
-    });
+    // Cargar tareas cuando se recarga la página
+    window.addEventListener('load', loadTasks);
 </script>
+
 </body>
 </html>
